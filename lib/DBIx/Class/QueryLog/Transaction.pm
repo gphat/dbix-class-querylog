@@ -9,7 +9,7 @@ has committed => (
 );
 
 has queries => (
-    traits => [qw(Array)]
+    traits => [qw(Array)],
     is => 'rw',
     isa => 'ArrayRef',
     default => sub { [] },
