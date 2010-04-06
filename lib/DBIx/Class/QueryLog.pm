@@ -1,6 +1,5 @@
 package DBIx::Class::QueryLog;
 use Moose;
-use MooseX::AttributeHelpers;
 
 has bucket => (
     is => 'rw',
@@ -19,13 +18,13 @@ has current_transaction => (
 );
 
 has log => (
-    metaclass => 'Collection::Array',
+    traits => [qw(Array)],
     is => 'rw',
     isa => 'ArrayRef',
     default => sub { [] },
-    provides => {
-        push => 'add_to_log',
-        clear => 'reset'
+    handles => {
+        add_to_log => 'push',
+        reset => 'clear'
     }
 );
 
@@ -54,7 +53,7 @@ DBIx::Class::QueryLog - Log queries for later analysis.
 
 =cut
 
-our $VERSION = '1.2.3';
+our $VERSION = '1.3.0';
 
 =head1 SYNOPSIS
 

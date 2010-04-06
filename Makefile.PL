@@ -5,8 +5,7 @@ all_from    'lib/DBIx/Class/QueryLog.pm';
 
 requires    'Test::More';
 requires    'Class::Accessor';
-requires    'Moose';
-requires    'MooseX::AttributeHelpers';
+requires    'Moose' => '0.90';
 requires    'Time::HiRes';
 requires    'DBIx::Class'       => '0.07000';
 

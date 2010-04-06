@@ -1,6 +1,5 @@
 package DBIx::Class::QueryLog::Transaction;
 use Moose;
-use MooseX::AttributeHelpers;
 
 extends 'DBIx::Class::QueryLog::Query';
 
@@ -10,13 +9,13 @@ has committed => (
 );
 
 has queries => (
-    metaclass => 'Collection::Array',
+    traits => [qw(Array)]
     is => 'rw',
     isa => 'ArrayRef',
     default => sub { [] },
-    provides => {
+    handles => {
         count => 'count',
-        push => 'add_to_queries'
+        add_to_queries => 'push'
     }
 );
 
