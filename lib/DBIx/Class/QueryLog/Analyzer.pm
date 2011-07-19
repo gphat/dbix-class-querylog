@@ -34,7 +34,7 @@ Create a new DBIx::Class::QueryLog::Analyzer
 
 =head2 get_sorted_queries
 
-Returns a list of all Query objects, sorted by elapsed time (descending).
+Returns an arrayref of all Query objects, sorted by elapsed time (descending).
 
 =cut
 
