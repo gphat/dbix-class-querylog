@@ -53,7 +53,7 @@ DBIx::Class::QueryLog - Log queries for later analysis.
 
 =cut
 
-our $VERSION = '1.3.1';
+our $VERSION = '1.3.2';
 
 =head1 SYNOPSIS
 
@@ -171,7 +171,7 @@ sub txn_begin {
 
     $self->next::method(@_) if $self->passthrough;
     $self->current_transaction(
-        DBIx::Class::QueryLog::Transaction->new({
+        $self->transaction_class()->new({
             start_time => Time::HiRes::time
         })
     );
@@ -234,7 +234,7 @@ sub query_start {
 
     $self->next::method($sql, @params) if $self->passthrough;
     $self->current_query(
-        DBIx::Class::QueryLog::Query->new({
+        $self->query_class()->new({
             start_time  => Time::HiRes::time,
             sql         => $sql,
             params      => \@params,
@@ -267,9 +267,29 @@ sub query_end {
     }
 }
 
+=head2 query_class
+
+Returns the name of the class to use for storing queries, by default
+C<DBIx::Class::QueryLog::Query>.  If you subclass C<DBIx::Class::QueryLog>,
+you may wish to override this.  Whatever you override it to must be a
+subclass of DBIx::Class::QueryLog::Query.
+
+=head2 transaction_class
+
+As query_class but for the class for storing transactions.  Defaults to
+C<DBIx::Class::QueryLog::Transaction>.
+
+=cut
+
+sub query_class       { 'DBIx::Class::QueryLog::Query' }
+
+sub transaction_class { 'DBIx::Class::QueryLog::Transaction' }
+
 =head1 AUTHOR
 
 Cory G Watson, C<< <gphat at cpan.org> >>
+
+with some contributions from David Cantrell
 
 =head1 COPYRIGHT & LICENSE
 
